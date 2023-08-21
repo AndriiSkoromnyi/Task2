@@ -60,6 +60,8 @@ internal static class Program
                 services.AddSingleton<HorseScreen, HorseScreen>();
                 services.AddSingleton<RabbitScreen, RabbitScreen>();
                 services.AddSingleton<CatScreen, CatScreen>();
+
+                //I hope it works(?)
             });
     }
 
