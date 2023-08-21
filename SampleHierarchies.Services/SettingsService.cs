@@ -11,6 +11,10 @@ namespace SampleHierarchies.Services
     {
         public Color MainScreenTextColor { get; set; }
         public ISettings Settings { get; set; }
+<<<<<<< Updated upstream
+=======
+        public ISettings _settings { get; set; } // Add this line
+>>>>>>> Stashed changes
 
         public void ChangeTextColors(ConsoleColor textColor)
         {
