@@ -2,8 +2,9 @@
 using SampleHierarchies.Data;
 using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
+using System;
 using System.Drawing;
-
+using System.IO;
 
 namespace SampleHierarchies.Services
 {
@@ -11,10 +12,7 @@ namespace SampleHierarchies.Services
     {
         public Color MainScreenTextColor { get; set; }
         public ISettings Settings { get; set; }
-<<<<<<< Updated upstream
-=======
         public ISettings _settings { get; set; } // Add this line
->>>>>>> Stashed changes
 
         public void ChangeTextColors(ConsoleColor textColor)
         {
