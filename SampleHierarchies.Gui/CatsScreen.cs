@@ -199,17 +199,6 @@ public sealed class CatScreen : Screen
         {
             Console.Write("What name of the cat? ");
             string? name = Console.ReadLine();
-
-            // Easter egg for the name "Garfield"
-            if (name != null && name.Equals("Garfield", StringComparison.OrdinalIgnoreCase))
-            {
-                Console.WriteLine("");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Wow! You found an easter egg. So you have a very cool orange cat who hates Mondays!");
-                Console.ResetColor();
-                Console.WriteLine("");
-            }
-
             Console.Write("What is the cat's age? ");
             string? ageAsString = Console.ReadLine();
             Console.Write("How much does cat weigh (kg)? ");
