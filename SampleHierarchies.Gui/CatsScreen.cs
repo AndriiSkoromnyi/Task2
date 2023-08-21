@@ -272,7 +272,6 @@ public sealed class CatScreen : Screen
 
             Cat cat = new Cat(name, age, weight, typeOfCat, hasOwner, foodPreference);
 
-
             return cat;
         }
     }
