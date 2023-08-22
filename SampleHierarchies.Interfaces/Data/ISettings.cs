@@ -9,8 +9,7 @@ namespace SampleHierarchies.Interfaces.Data
     /// </summary>
     public interface ISettings
     {
-        #region Interface Members
-
-        
+       
+       
     }
 }
