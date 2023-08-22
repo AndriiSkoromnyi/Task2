@@ -2,14 +2,19 @@
 using SampleHierarchies.Data;
 using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
-using System.Runtime;
-
 
 namespace SampleHierarchies.Services
 {
     public class SettingsService : ISettingsService
     {
         private ISettings _settings;
+
+        public SettingsService()
+        {
+            // Initialize the settings property with a new instance of Settings
+            _settings = new Settings();
+        }
+
         public ISettings Settings
         {
             get { return _settings; }
@@ -18,12 +23,12 @@ namespace SampleHierarchies.Services
 
         public ISettings Read(string jsonPath)
         {
-            ISettings? result = null;
+            ISettings result = null;
 
             try
             {
                 string jsonData = File.ReadAllText(jsonPath);
-                result = JsonConvert.DeserializeObject<Settings>(jsonData); // Assuming Settings is the implementation of ISettings
+                result = JsonConvert.DeserializeObject<Settings>(jsonData);
             }
             catch (Exception ex)
             {
@@ -38,7 +43,6 @@ namespace SampleHierarchies.Services
             try
             {
                 string jsonData = JsonConvert.SerializeObject(settings, Newtonsoft.Json.Formatting.Indented);
-
                 File.WriteAllText(jsonPath, jsonData);
             }
             catch (Exception ex)
