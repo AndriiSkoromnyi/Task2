@@ -205,7 +205,6 @@ public sealed class CatScreen : Screen
             string? weightAsString = Console.ReadLine();
             Console.Write("Write a type of your cat: Persian, Siamese, Bengal, Russian Blue, or something else ");
             string? typeOfCat = Console.ReadLine();
-
             Console.Write("Does the cat have an owner? (Y/N): ");
             string? hasOwnerInput = Console.ReadLine();
 
