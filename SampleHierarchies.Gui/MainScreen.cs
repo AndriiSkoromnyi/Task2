@@ -4,7 +4,6 @@
 ﻿using System.Drawing;
 using SampleHierarchies.Enums;
 using SampleHierarchies.Gui;
->>>>>>> Stashed changes
 using SampleHierarchies.Interfaces.Services;
 
 namespace SampleHierarchies.Gui;
