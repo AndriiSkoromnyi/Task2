@@ -2,12 +2,20 @@
 using SampleHierarchies.Data;
 using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
+using System.Runtime;
 
 
 namespace SampleHierarchies.Services
 {
     public class SettingsService : ISettingsService
     {
+        private ISettings _settings;
+        public ISettings Settings
+        {
+            get { return _settings; }
+            set { _settings = value; }
+        }
+
         public ISettings Read(string jsonPath)
         {
             ISettings? result = null;
