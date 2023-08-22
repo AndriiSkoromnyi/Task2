@@ -2,24 +2,13 @@
 using SampleHierarchies.Data;
 using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
-using System;
-using System.Drawing;
-using System.IO;
+
 
 namespace SampleHierarchies.Services
 {
     public class SettingsService : ISettingsService
     {
-        public Color MainScreenTextColor { get; set; }
-        public ISettings Settings { get; set; }
-        public ISettings _settings { get; set; } // Add this line
-
-        public void ChangeTextColors(ConsoleColor textColor)
-        {
-            Console.ForegroundColor = textColor; // Change the console text color
-        }
-
-        public ISettings? Read(string jsonPath)
+        public ISettings Read(string jsonPath)
         {
             ISettings? result = null;
 
