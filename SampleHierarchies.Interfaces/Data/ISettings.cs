@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using System.Collections.Generic;
+
 using SampleHierarchies.Interfaces.Data.Mammals;
 
 namespace SampleHierarchies.Interfaces.Data

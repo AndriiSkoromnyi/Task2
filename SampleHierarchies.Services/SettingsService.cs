@@ -1,19 +1,35 @@
 ﻿using Newtonsoft.Json;
+using SampleHierarchies.Data;
 using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
-using System.IO;
+using System.Runtime;
+
 
 namespace SampleHierarchies.Services
 {
     public class SettingsService : ISettingsService
     {
-        public ISettings? Read(string jsonPath)
+        private ISettings _settings;
+        public ISettings Settings
+        {
+            get { return _settings; }
+            set { _settings = value; }
+        }
+
+        public ISettings Read(string jsonPath)
         {
             ISettings? result = null;
-            // TODO: Реализуйте чтение данных из файла JSON и возврат объекта ISettings
-            // Примерно так:
-            string jsonData = File.ReadAllText(jsonPath);
-            result = JsonConvert.DeserializeObject<ISettings>(jsonData);
+
+            try
+            {
+                string jsonData = File.ReadAllText(jsonPath);
+                result = JsonConvert.DeserializeObject<Settings>(jsonData); // Assuming Settings is the implementation of ISettings
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error while reading JSON file: " + ex.Message);
+            }
+
             return result;
         }
 
@@ -21,15 +37,12 @@ namespace SampleHierarchies.Services
         {
             try
             {
-                // Преобразуем объект ISettings в JSON-строку
                 string jsonData = JsonConvert.SerializeObject(settings, Newtonsoft.Json.Formatting.Indented);
 
-                // Записываем JSON-строку в файл
                 File.WriteAllText(jsonPath, jsonData);
             }
             catch (Exception ex)
             {
-                // В случае ошибки при записи выводим сообщение об ошибке
                 Console.WriteLine("Error while writing to JSON file: " + ex.Message);
             }
         }
