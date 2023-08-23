@@ -10,11 +10,8 @@ namespace SampleHierarchies.Services
         private ISettings _settings;
 
         public SettingsService()
-        {
-            
+        {   
             _settings = new Settings();
-            
-            
         }
 
         public ISettings Settings
@@ -54,18 +51,5 @@ namespace SampleHierarchies.Services
                 Console.WriteLine("Error while writing to JSON file: " + ex.Message);
             }
         }
-
-        public ConsoleColor GetScreenForegroundColor(string screenName)
-        {
-            if (_screenColors.ContainsKey(screenName))
-            {
-                return _screenColors[screenName];
-            }
-            else
-            {               
-                return ConsoleColor.White;
-            }
-        }
-
     }
 }

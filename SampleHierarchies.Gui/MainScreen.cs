@@ -1,12 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SampleHierarchies.Enums;
+using SampleHierarchies.Gui;
+using SampleHierarchies.Interfaces.Services;
 
-namespace SampleHierarchies.Gui
+namespace SampleHierarchies.UserInterface
 {
-    internal class MainScreen
+    public class MainScreen
     {
+        private ISettingsService _settingsService;
+        private AnimalsScreen _animalsScreen;
+
+        public MainScreen(ISettingsService settingsService, AnimalsScreen animalsScreen)
+        {
+            _settingsService = settingsService;
+            _animalsScreen = animalsScreen;
+        }
+
+        public void ShowMainMenu()
+        {
+            while (true)
+            {
+                Console.WriteLine("Main Menu");
+                Console.WriteLine("0. Exit");
+                Console.WriteLine("1. Open Animals Screen");
+                Console.WriteLine("2. Create a new settings");
+                Console.Write("Enter your choice: ");
+
+                string? choiceAsString = Console.ReadLine();
+
+                try
+                {
+                    if (choiceAsString is null)
+                    {
+                        throw new ArgumentNullException(nameof(choiceAsString));
+                    }
+
+                    MainScreenChoices choice = (MainScreenChoices)Int32.Parse(choiceAsString);
+                    switch (choice)
+                    {
+                        case MainScreenChoices.Animals:
+                            _animalsScreen.Show();
+                            break;
+
+                        case MainScreenChoices.Settings:
+                            Console.WriteLine("Not yet implemented.");
+                            // TODO: implement
+                            break;
+
+                        case MainScreenChoices.Exit:
+                            Console.WriteLine("Goodbye.");
+                            return;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid choice. Try again.");
+                }
+            }
+        }
     }
 }
