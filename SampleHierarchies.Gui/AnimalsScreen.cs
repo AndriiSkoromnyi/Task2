@@ -47,7 +47,6 @@ namespace SampleHierarchies.Gui
                 Console.WriteLine("1. Mammals");
                 Console.WriteLine("2. Save to file");
                 Console.WriteLine("3. Read from file");
-                Console.WriteLine("4. Change text color");
                 Console.Write("Please enter your choice: ");
 
                 string? choiceAsString = Console.ReadLine();
@@ -75,10 +74,6 @@ namespace SampleHierarchies.Gui
                             SaveToFile();
                             break;
 
-                        case AnimalsScreenChoices.ChangeTextColor: // Обработка нового варианта выбора
-                            ChangeTextColor();
-                            break;
-
                         case AnimalsScreenChoices.Exit:
                             Console.WriteLine("Going back to parent menu.");
                             return;
@@ -92,45 +87,6 @@ namespace SampleHierarchies.Gui
         }
 
         #endregion // Public Methods
-
-        #region Private Methods
-
-        private void ChangeTextColor()
-        {
-            try
-            {
-                Console.Write("Enter the text color (e.g., Red, Green, Blue) or its numeric code (0 - 15): ");
-                string? colorInput = Console.ReadLine();
-
-                if (colorInput is not null && !string.IsNullOrWhiteSpace(colorInput))
-                {
-                    if (Enum.TryParse(colorInput, out ConsoleColor consoleColor))
-                    {
-                        // Convert ConsoleColor to Color for storing in settings
-                        Color color = Color.FromName(consoleColor.ToString());
-                        _settings.AnimalsScreenTextColor = color;
-
-                        Console.ForegroundColor = consoleColor;
-                        Console.WriteLine("Text color has been changed. This is the new text color.");
-                        Console.ResetColor();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid color input. Text color remains unchanged.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input. Text color remains unchanged.");
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Error occurred while changing text color. Text color remains unchanged.");
-            }
-        }
-
-        #endregion // Private Methods
 
         #region Private Methods
 
@@ -171,7 +127,7 @@ namespace SampleHierarchies.Gui
                 if (_settings is not null)
                 {
                     // Use the loaded settings to set colors of different screens
-                    SetTextColorsFromSettings();
+                    //SetTextColorsFromSettings();
                     Console.WriteLine("This is the Animals Screen.");
                 }
                 else
@@ -183,23 +139,7 @@ namespace SampleHierarchies.Gui
             {
                 Console.WriteLine("Data reading was not successful.");
             }
-        }
-
-        private void SetTextColorsFromSettings()
-        {
-            Console.ForegroundColor = (ConsoleColor)_settings.HomeScreenTextColor.ToArgb();
-            Console.Clear();
-            Console.WriteLine("This is the Home Screen.");
-            Console.ForegroundColor = (ConsoleColor)_settings.AnimalsScreenTextColor.ToArgb();
-            Console.Clear();
-            Console.WriteLine("This is the Animals Screen.");
-            Console.ForegroundColor = (ConsoleColor)_settings.MammalsScreenTextColor.ToArgb();
-            Console.Clear();
-            Console.WriteLine("This is the Mammals Screen.");
-            Console.ForegroundColor = (ConsoleColor)_settings.DogsScreenTextColor.ToArgb();
-            Console.Clear();
-            Console.WriteLine("This is the Dogs Screen.");
-        }
+        }  
 
         #endregion // Private Methods
     }
