@@ -17,14 +17,15 @@ public sealed class HorseScreen : Screen
     /// Data service.
     /// </summary>
     private IDataService _dataService;
-
+    private ISettingsService _settingsService;
     /// <summary>
     /// Ctor.
     /// </summary>
     /// <param name="dataService">Data service reference</param>
-    public HorseScreen(IDataService dataService)
+    public HorseScreen(IDataService dataService, ISettingsService settingsService)
     {
         _dataService = dataService;
+        _settingsService = settingsService;
     }
     #endregion Properties And Ctor
 
@@ -35,7 +36,8 @@ public sealed class HorseScreen : Screen
     {
         while (true)
         {
-            Console.WriteLine();
+            Console.ForegroundColor = _settingsService.Settings._horseScreenForegroundColor;
+            Console.WriteLine();          
             Console.WriteLine("Your available choices are:");
             Console.WriteLine("0. Exit");
             Console.WriteLine("1. List all horse");
@@ -45,6 +47,7 @@ public sealed class HorseScreen : Screen
             Console.Write("Please enter your choice: ");
 
             string? choiceAsString = Console.ReadLine();
+            Console.ResetColor();
 
             // Validate choice
             try

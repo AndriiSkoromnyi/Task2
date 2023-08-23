@@ -1,5 +1,7 @@
 ﻿using SampleHierarchies.Enums;
+using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
+using SampleHierarchies.Services;
 
 namespace SampleHierarchies.Gui;
 
@@ -17,6 +19,7 @@ public sealed class MammalsScreen : Screen
     private HorseScreen _horsesScreen;
     private RabbitScreen _rabbitScreen;
     private CatScreen _catScreen;
+    private ISettingsService _settingsService;
     /// <summary>
     /// Ctor.
     /// </summary>
@@ -26,13 +29,17 @@ public sealed class MammalsScreen : Screen
     /// <param name="rabbitScreen">Horse screen</param>
     /// <param name="catScreen">Horse screen</param>
 
-    public MammalsScreen(DogsScreen dogsScreen, HorseScreen horseScreen, RabbitScreen rabbitScreen, CatScreen catScreen)
+    public MammalsScreen(DogsScreen dogsScreen, HorseScreen horseScreen, RabbitScreen rabbitScreen, CatScreen catScreen, ISettingsService settingsService)
+
     {
         _horsesScreen = horseScreen;
         _dogsScreen = dogsScreen;
         _rabbitScreen = rabbitScreen;
         _catScreen = catScreen;
+        _settingsService = settingsService;
     }
+
+    
 
     #endregion Properties And Ctor
 
@@ -43,6 +50,9 @@ public sealed class MammalsScreen : Screen
     {
         while (true)
         {
+            Console.ForegroundColor = _settingsService.Settings._mammalScreenForegroundColor;
+            Console.WriteLine();
+
             Console.WriteLine();
             Console.WriteLine("Your available choices are:");
             Console.WriteLine("0. Exit");
@@ -53,6 +63,7 @@ public sealed class MammalsScreen : Screen
             Console.Write("Please enter your choice: ");
 
             string? choiceAsString = Console.ReadLine();
+            Console.ResetColor();
 
             // Validate choice
             try

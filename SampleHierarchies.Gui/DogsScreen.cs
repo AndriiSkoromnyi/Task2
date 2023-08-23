@@ -4,6 +4,7 @@ using SampleHierarchies.Data.Mammals;
 using SampleHierarchies.Enums;
 using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
+using SampleHierarchies.Services;
 
 namespace SampleHierarchies.Gui
 {
@@ -17,18 +18,21 @@ namespace SampleHierarchies.Gui
         /// <summary>
         /// Data service.
         /// </summary>
+
         private IDataService _dataService;
         private ISettings _settings;
+        private ISettingsService _settingsService;
 
         /// <summary>
         /// Ctor.
         /// </summary>
         /// <param name="dataService">Data service reference</param>
         /// <param name="settings">Settings reference</param>
-        public DogsScreen(IDataService dataService, ISettings settings)
+        public DogsScreen(IDataService dataService, ISettings settings, ISettingsService settingsService)
         {
             _dataService = dataService;
             _settings = settings;
+            _settingsService = settingsService;
         }
 
         #endregion Properties And Ctor
@@ -40,6 +44,9 @@ namespace SampleHierarchies.Gui
         {
             while (true)
             {
+                Console.ForegroundColor = _settingsService.Settings._dogScreenForegroundColor;
+                Console.WriteLine();
+
                 Console.WriteLine();
                 Console.WriteLine("Your available choices are:");
                 Console.WriteLine("0. Exit");
@@ -50,6 +57,7 @@ namespace SampleHierarchies.Gui
                 Console.Write("Please enter your choice: ");
 
                 string? choiceAsString = Console.ReadLine();
+                Console.ResetColor();
 
                 // Validate choice
                 try

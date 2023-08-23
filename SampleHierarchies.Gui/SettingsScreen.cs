@@ -1,7 +1,7 @@
 ﻿using SampleHierarchies.Enums;
 using SampleHierarchies.Gui;
+using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
-using System;
 
 namespace SampleHierarchies.UserInterface
 {
@@ -16,6 +16,26 @@ namespace SampleHierarchies.UserInterface
             _settingsService = settingsService;
             _mainScreen = mainScreen;
             _animalsScreen = animalsScreen;
+        }
+
+        private ConsoleColor GetConsoleColorFromUserInput()
+        {
+            Console.WriteLine("Available ConsoleColors:");
+            foreach (ConsoleColor color in Enum.GetValues(typeof(ConsoleColor)))
+            {
+                Console.WriteLine($"{(int)color}. {color}");
+            }
+
+            Console.Write("Enter the number for the desired ConsoleColor: ");
+            if (int.TryParse(Console.ReadLine(), out int colorNumber) && Enum.IsDefined(typeof(ConsoleColor), colorNumber))
+            {
+                return (ConsoleColor)colorNumber;
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Using default ConsoleColor.");
+                return ConsoleColor.Gray; // Default color
+            }
         }
 
         public void ShowSettingsMenu()
@@ -52,66 +72,55 @@ namespace SampleHierarchies.UserInterface
 
                         case SettingsMenuChoices.SetMainScreenColor:
                             Console.WriteLine("Setting MainScreen color.");
-                            ConsoleColor newColor = // Get user input for the new color
-                            _settingsService.Settings._mainScreenForegroundColor = newColor;
-                            _settingsService.Write(_settingsService.Settings, "settings.json");
+                            ConsoleColor mainScreenColor = GetConsoleColorFromUserInput();
+                            _settingsService.Settings._mainScreenForegroundColor = mainScreenColor;
                             break;
 
                         case SettingsMenuChoices.SetAnimalScreenColor:
                             Console.WriteLine("Setting AnimalScreen color.");
-                            ConsoleColor newColor = // Get user input for the new color
-                            _settingsService.Settings._animalScreenForegroundColor = newColor;
-                            _settingsService.Write(_settingsService.Settings, "settings.json");
+                            ConsoleColor animalScreenColor = GetConsoleColorFromUserInput();
+                            _settingsService.Settings._animalScreenForegroundColor = animalScreenColor;
                             break;
 
                         case SettingsMenuChoices.SetMammalsScreenColor:
                             Console.WriteLine("Setting MammalsScreen color.");
-                            ConsoleColor newColor = // Get user input for the new color
-                            _settingsService.Settings._mammalScreenForegroundColor = newColor;
-                            _settingsService.Write(_settingsService.Settings, "settings.json");
+                            ConsoleColor mammalsScreenColor = GetConsoleColorFromUserInput();
+                            _settingsService.Settings._mammalScreenForegroundColor = mammalsScreenColor;
                             break;
 
                         case SettingsMenuChoices.SetDogScreenColor:
                             Console.WriteLine("Setting DogScreen color.");
-                            ConsoleColor newColor = // Get user input for the new color
-                            _settingsService.Settings._dogScreenForegroundColor = newColor;
-                            _settingsService.Write(_settingsService.Settings, "settings.json");
+                            ConsoleColor dogScreenColor = GetConsoleColorFromUserInput();
+                            _settingsService.Settings._dogScreenForegroundColor = dogScreenColor;
                             break;
 
                         case SettingsMenuChoices.SetHorseScreenColor:
                             Console.WriteLine("Setting HorseScreen color.");
-                            ConsoleColor newColor = // Get user input for the new color
-                            _settingsService.Settings._horseScreenForegroundColor = newColor;
-                            _settingsService.Write(_settingsService.Settings, "settings.json");
+                            ConsoleColor horseScreenColor = GetConsoleColorFromUserInput();
+                            _settingsService.Settings._horseScreenForegroundColor = horseScreenColor;
                             break;
 
                         case SettingsMenuChoices.SetRabbitScreenColor:
                             Console.WriteLine("Setting RabbitScreen color.");
-                            ConsoleColor newColor = // Get user input for the new color
-                            _settingsService.Settings._rabbitScreenForegroundColor = newColor;
-                            _settingsService.Write(_settingsService.Settings, "settings.json");
+                            ConsoleColor rabbitScreenColor = GetConsoleColorFromUserInput();
+                            _settingsService.Settings._rabbitScreenForegroundColor = rabbitScreenColor;
                             break;
 
                         case SettingsMenuChoices.SetCatScreenColor:
                             Console.WriteLine("Setting CatScreen color.");
-                            ConsoleColor newColor = // Get user input for the new color
-                            _settingsService.Settings._catScreenForegroundColor = newColor;
-                            _settingsService.Write(_settingsService.Settings, "settings.json");
+                            ConsoleColor catScreenColor = GetConsoleColorFromUserInput();
+                            _settingsService.Settings._catScreenForegroundColor = catScreenColor;
                             break;
-
-
-
-
-                        // TODO: Implement other cases for different screen colors and settings
 
                         case SettingsMenuChoices.ReadSettingsFromFile:
                             Console.WriteLine("Reading settings from file.");
-                            // TODO: Implement reading settings from a file
+                            ISettings loadedSettings = _settingsService.Read("path_to_settings_file.json");
+                            _settingsService.Settings = loadedSettings;
                             break;
 
                         case SettingsMenuChoices.WriteSettingsToFile:
                             Console.WriteLine("Writing settings to file.");
-                            // TODO: Implement writing settings to a file
+                            _settingsService.Write(_settingsService.Settings, "path_to_settings_file.json");
                             break;
 
                         default:

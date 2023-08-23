@@ -37,6 +37,9 @@ namespace SampleHierarchies.Gui
         {
             while (true)
             {
+                Console.ForegroundColor = _settingsService.Settings._animalScreenForegroundColor;
+                Console.WriteLine();
+
                 Console.WriteLine();
                 Console.WriteLine("Your available choices are:");
                 Console.WriteLine("0. Exit");
@@ -46,6 +49,7 @@ namespace SampleHierarchies.Gui
                 Console.Write("Please enter your choice: ");
 
                 string? choiceAsString = Console.ReadLine();
+                Console.ResetColor();
 
                 // Validate choice
                 try

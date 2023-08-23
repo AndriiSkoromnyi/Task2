@@ -3,6 +3,7 @@ using SampleHierarchies.Enums;
 using SampleHierarchies.Gui;
 using SampleHierarchies.Interfaces.Data.Mammals;
 using SampleHierarchies.Interfaces.Services;
+using SampleHierarchies.Services;
 
 
 public sealed class CatScreen : Screen
@@ -13,14 +14,16 @@ public sealed class CatScreen : Screen
     /// Data service.
     /// </summary>
     private IDataService _dataService;
+    private ISettingsService _settingsService;
 
     /// <summary>
     /// Ctor.
     /// </summary>
     /// <param name="dataService">Data service reference</param>
-    public CatScreen(IDataService dataService)
+    public CatScreen(IDataService dataService, ISettingsService settingsService)
     {
         _dataService = dataService;
+        _settingsService = settingsService;
     }
     #endregion Properties And Ctor
 
@@ -31,6 +34,10 @@ public sealed class CatScreen : Screen
     {
         while (true)
         {
+
+            Console.ForegroundColor = _settingsService.Settings._catScreenForegroundColor;
+            Console.WriteLine();
+
             Console.WriteLine();
             Console.WriteLine("Your available choices are:");
             Console.WriteLine("0. Exit");
@@ -41,7 +48,7 @@ public sealed class CatScreen : Screen
             Console.Write("Please enter your choice: ");
 
             string? choiceAsString = Console.ReadLine();
-
+            Console.ResetColor();
             // Validate choice
             try
             {
