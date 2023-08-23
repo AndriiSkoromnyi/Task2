@@ -1,9 +1,5 @@
-﻿using System;
-using System.Drawing;
-using SampleHierarchies.Data;
-using SampleHierarchies.Enums;
+﻿using SampleHierarchies.Enums;
 using SampleHierarchies.Interfaces.Data;
-using SampleHierarchies.Interfaces.Data.Mammals;
 using SampleHierarchies.Interfaces.Services;
 
 namespace SampleHierarchies.Gui

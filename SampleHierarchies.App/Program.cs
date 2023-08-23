@@ -7,62 +7,48 @@ using SampleHierarchies.Gui;
 using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
 using SampleHierarchies.Services;
+using SampleHierarchies.UserInterface;
+using System;
 
-namespace ImageTagger.FrontEnd.WinForms;
-
-/// <summary>
-/// Main class for starting up program.
-/// </summary>
-internal static class Program
+namespace ImageTagger.FrontEnd.WinForms
 {
-    #region Main Method
-
-    /// <summary>
-    ///  The main entry point for the application.
-    /// </summary>
-    /// <param name="args">Arguments</param>
-    [STAThread]
-    static void Main(string[] args)
+    internal static class Program
     {
-        var host = CreateHostBuilder().Build();
-        ServiceProvider = host.Services;
+        public static IServiceProvider? ServiceProvider { get; private set; } = null;
 
-        var mainScreen = ServiceProvider.GetRequiredService<MainScreen>();
-        mainScreen.Show();
+        [STAThread]
+        static void Main(string[] args)
+        {
+            // Build and configure the service provider
+            ServiceProvider = CreateHostBuilder().Build().Services;
+
+            ISettingsService settingsService = ServiceProvider.GetRequiredService<ISettingsService>();
+            AnimalsScreen animalsScreen = new AnimalsScreen(
+                ServiceProvider.GetRequiredService<IDataService>(),
+                ServiceProvider.GetRequiredService<MammalsScreen>(),
+                ServiceProvider.GetRequiredService<ISettingsService>(),
+                ServiceProvider.GetRequiredService<ISettings>());
+            MainScreen mainScreen = new MainScreen(settingsService, animalsScreen);
+            mainScreen.ShowMainMenu();
+        }
+
+        static IHostBuilder CreateHostBuilder()
+        {
+            return Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) =>
+                {
+                    services.AddSingleton<ISettings, Settings>();
+                    services.AddSingleton<ISettingsService, SettingsService>();
+                    services.AddSingleton<IEventAggregator, EventAggregator>();
+                    services.AddSingleton<IDataService, DataService>();
+                    services.AddSingleton<MainScreen, MainScreen>();
+                    services.AddSingleton<DogsScreen, DogsScreen>();
+                    services.AddSingleton<AnimalsScreen, AnimalsScreen>();
+                    services.AddSingleton<MammalsScreen, MammalsScreen>();
+                    services.AddSingleton<HorseScreen, HorseScreen>();
+                    services.AddSingleton<RabbitScreen, RabbitScreen>();
+                    services.AddSingleton<CatScreen, CatScreen>();
+                });
+        }
     }
-
-    #endregion // Main Method
-
-    #region Properties And Methods
-
-    /// <summary>
-    /// Service provider.
-    /// </summary>
-    public static IServiceProvider? ServiceProvider { get; private set; } = null;
-
-    /// <summary>
-    /// Creates a host builder.
-    /// </summary>
-    /// <returns></returns>
-    static IHostBuilder CreateHostBuilder()
-    {
-        return Host.CreateDefaultBuilder()
-            .ConfigureServices((context, services) =>
-            {
-                services.AddSingleton<ISettings, Settings>();
-                services.AddSingleton<ISettingsService, SettingsService>();
-                services.AddSingleton<IEventAggregator, EventAggregator>();
-                services.AddSingleton<IDataService, DataService>();
-                services.AddSingleton<MainScreen, MainScreen>();
-                services.AddSingleton<DogsScreen, DogsScreen>();
-                services.AddSingleton<AnimalsScreen, AnimalsScreen>();
-                services.AddSingleton<MammalsScreen, MammalsScreen>();
-                services.AddSingleton<HorseScreen, HorseScreen>();
-                services.AddSingleton<RabbitScreen, RabbitScreen>();
-                services.AddSingleton<CatScreen, CatScreen>();
-            });
-    }
-
-    #endregion // Properties And Methods
 }
-
