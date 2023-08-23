@@ -28,8 +28,11 @@ namespace ImageTagger.FrontEnd.WinForms
                 ServiceProvider.GetRequiredService<MammalsScreen>(),
                 ServiceProvider.GetRequiredService<ISettingsService>(),
                 ServiceProvider.GetRequiredService<ISettings>());
-            MainScreen mainScreen = new MainScreen(settingsService, animalsScreen);
+            SettingsScreen settingsScreen = ServiceProvider.GetRequiredService<SettingsScreen>();
+            MainScreen mainScreen = new MainScreen(settingsService, animalsScreen, settingsScreen);
+
             mainScreen.ShowMainMenu();
+
         }
 
         static IHostBuilder CreateHostBuilder()
@@ -48,7 +51,9 @@ namespace ImageTagger.FrontEnd.WinForms
                     services.AddSingleton<HorseScreen, HorseScreen>();
                     services.AddSingleton<RabbitScreen, RabbitScreen>();
                     services.AddSingleton<CatScreen, CatScreen>();
+                    services.AddSingleton<SettingsScreen, SettingsScreen>();
                 });
         }
+
     }
 }

@@ -8,11 +8,13 @@ namespace SampleHierarchies.UserInterface
     {
         private ISettingsService _settingsService;
         private AnimalsScreen _animalsScreen;
+        private SettingsScreen _settingsScreen;
 
-        public MainScreen(ISettingsService settingsService, AnimalsScreen animalsScreen)
+        public MainScreen(ISettingsService settingsService, AnimalsScreen animalsScreen, SettingsScreen settingsScreen)
         {
             _settingsService = settingsService;
             _animalsScreen = animalsScreen;
+            _settingsScreen = settingsScreen;
         }
 
         public void ShowMainMenu()
@@ -25,7 +27,7 @@ namespace SampleHierarchies.UserInterface
                 Console.WriteLine("Main Menu");
                 Console.WriteLine("0. Exit");
                 Console.WriteLine("1. Open Animals Screen");
-                Console.WriteLine("2. Create a new settings");
+                Console.WriteLine("2. Manage Settings");
                 Console.Write("Enter your choice: ");
 
                 string? choiceAsString = Console.ReadLine();
@@ -47,7 +49,7 @@ namespace SampleHierarchies.UserInterface
 
                         case MainScreenChoices.Settings:
                             Console.WriteLine("Not yet implemented.");
-                            // TODO: implement
+                            _settingsScreen.Show();
                             break;
 
                         case MainScreenChoices.Exit:

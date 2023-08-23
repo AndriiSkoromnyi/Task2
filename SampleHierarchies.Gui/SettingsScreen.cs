@@ -38,7 +38,7 @@ namespace SampleHierarchies.UserInterface
             }
         }
 
-        public void ShowSettingsMenu()
+        public void Show()
         {
             while (true)
             {
