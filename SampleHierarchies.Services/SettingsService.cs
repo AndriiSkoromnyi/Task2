@@ -13,17 +13,8 @@ namespace SampleHierarchies.Services
         {
             
             _settings = new Settings();
-            _screenColors = new Dictionary<string, ConsoleColor>
-            {
-                { "MainScreen", _settings.MainScreenForegroundColor },
-                { "AnimalScreen", _settings.AnimalScreenForegroundColor },
-                { "MammalScreen", _settings.MammalScreenForegroundColor },
-                { "DogScreen", _settings.DogScreenForegroundColor },
-                { "CatScreen", _settings.CatScreenForegroundColor },
-                { "RabbitScreen", _settings.RabbitScreenForegroundColor },
-                { "HorseScreen", _settings.HorseScreenForegroundColor },
-
-            };
+            
+            
         }
 
         public ISettings Settings
