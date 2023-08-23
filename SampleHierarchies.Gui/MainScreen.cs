@@ -21,7 +21,7 @@ namespace SampleHierarchies.UserInterface
         {
             while (true)
             {
-                Console.ForegroundColor = _settingsService.Settings._mainScreenForegroundColor;  
+                Console.ForegroundColor = _settingsService.Settings._mainScreenForegroundColor;
                 Console.WriteLine();
 
                 Console.WriteLine("Main Menu");
@@ -47,10 +47,13 @@ namespace SampleHierarchies.UserInterface
                             _animalsScreen.Show();
                             break;
 
-                        case MainScreenChoices.Settings:
-                            Console.WriteLine("Not yet implemented.");
-                            _settingsScreen.Show();
-                            break;
+                        case MainScreenChoices.Settings:                            
+                            bool settingsChanged = _settingsScreen.Show();
+                            if (settingsChanged)
+                            {
+                                continue; 
+                            }
+                            break; ;
 
                         case MainScreenChoices.Exit:
                             Console.WriteLine("Goodbye.");

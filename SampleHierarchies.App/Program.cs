@@ -26,8 +26,8 @@ namespace ImageTagger.FrontEnd.WinForms
             AnimalsScreen animalsScreen = new AnimalsScreen(
                 ServiceProvider.GetRequiredService<IDataService>(),
                 ServiceProvider.GetRequiredService<MammalsScreen>(),
-                ServiceProvider.GetRequiredService<ISettingsService>(),
-                ServiceProvider.GetRequiredService<ISettings>());
+                settingsService,
+                settingsService.Settings); // Using the actual settings object
             SettingsScreen settingsScreen = ServiceProvider.GetRequiredService<SettingsScreen>();
             MainScreen mainScreen = new MainScreen(settingsService, animalsScreen, settingsScreen);
 

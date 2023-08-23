@@ -1,13 +1,13 @@
 ﻿using SampleHierarchies.Enums;
 using SampleHierarchies.Gui;
-using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
+using System;
 
 namespace SampleHierarchies.UserInterface
 {
     public class SettingsScreen
     {
-        private ISettingsService _settingsService;
+        private ISettingsService _settingsService;  
         private MainScreen _mainScreen;
         private AnimalsScreen _animalsScreen;
 
@@ -38,7 +38,7 @@ namespace SampleHierarchies.UserInterface
             }
         }
 
-        public void Show()
+        public bool Show()
         {
             while (true)
             {
@@ -114,7 +114,7 @@ namespace SampleHierarchies.UserInterface
 
                         case SettingsMenuChoices.ReadSettingsFromFile:
                             Console.WriteLine("Reading settings from file.");
-                            ISettings loadedSettings = _settingsService.Read("path_to_settings_file.json");
+                            Interfaces.Data.ISettings loadedSettings = _settingsService.Read("path_to_settings_file.json");
                             _settingsService.Settings = loadedSettings;
                             break;
 
@@ -132,6 +132,7 @@ namespace SampleHierarchies.UserInterface
                 {
                     Console.WriteLine("Invalid choice. Try again.");
                 }
+                return false;
             }
         }
     }
