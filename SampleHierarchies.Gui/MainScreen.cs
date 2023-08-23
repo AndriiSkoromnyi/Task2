@@ -19,6 +19,9 @@ namespace SampleHierarchies.UserInterface
         {
             while (true)
             {
+                Console.ForegroundColor = _settingsService.Settings._mainScreenForegroundColor;  
+                Console.WriteLine();
+
                 Console.WriteLine("Main Menu");
                 Console.WriteLine("0. Exit");
                 Console.WriteLine("1. Open Animals Screen");
@@ -26,6 +29,7 @@ namespace SampleHierarchies.UserInterface
                 Console.Write("Enter your choice: ");
 
                 string? choiceAsString = Console.ReadLine();
+                Console.ResetColor();
 
                 try
                 {

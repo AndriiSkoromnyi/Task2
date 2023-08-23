@@ -9,7 +9,6 @@ namespace SampleHierarchies.Interfaces.Data
     /// </summary>
     public interface ISettings
     {
-       
-       
+        ConsoleColor _mainScreenForegroundColor { get; set; }
     }
 }
