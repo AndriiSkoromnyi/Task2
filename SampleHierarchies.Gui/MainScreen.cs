@@ -48,11 +48,7 @@ namespace SampleHierarchies.UserInterface
                             break;
 
                         case MainScreenChoices.Settings:                            
-                            bool settingsChanged = _settingsScreen.Show();
-                            if (settingsChanged)
-                            {
-                                continue; 
-                            }
+                            _settingsScreen.Show();                           
                             break; ;
 
                         case MainScreenChoices.Exit:

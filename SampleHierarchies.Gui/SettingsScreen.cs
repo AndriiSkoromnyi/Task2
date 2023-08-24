@@ -1,21 +1,16 @@
-﻿using SampleHierarchies.Enums;
-using SampleHierarchies.Gui;
+﻿using System;
+using SampleHierarchies.Enums;
 using SampleHierarchies.Interfaces.Services;
-using System;
 
 namespace SampleHierarchies.UserInterface
 {
     public class SettingsScreen
     {
-        private ISettingsService _settingsService;  
-        private MainScreen _mainScreen;
-        private AnimalsScreen _animalsScreen;
+        private ISettingsService _settingsService;
 
-        public SettingsScreen(ISettingsService settingsService, MainScreen mainScreen, AnimalsScreen animalsScreen)
+        public SettingsScreen(ISettingsService settingsService)
         {
             _settingsService = settingsService;
-            _mainScreen = mainScreen;
-            _animalsScreen = animalsScreen;
         }
 
         private ConsoleColor GetConsoleColorFromUserInput()
@@ -38,7 +33,8 @@ namespace SampleHierarchies.UserInterface
             }
         }
 
-        public bool Show()
+
+        public void Show()
         {
             while (true)
             {
@@ -75,7 +71,7 @@ namespace SampleHierarchies.UserInterface
                             ConsoleColor mainScreenColor = GetConsoleColorFromUserInput();
                             _settingsService.Settings._mainScreenForegroundColor = mainScreenColor;
                             break;
-
+                            
                         case SettingsMenuChoices.SetAnimalScreenColor:
                             Console.WriteLine("Setting AnimalScreen color.");
                             ConsoleColor animalScreenColor = GetConsoleColorFromUserInput();
@@ -123,6 +119,10 @@ namespace SampleHierarchies.UserInterface
                             _settingsService.Write(_settingsService.Settings, "path_to_settings_file.json");
                             break;
 
+                        case SettingsMenuChoices.Exit:
+                            Console.WriteLine("Exiting settings.");
+                            return;
+
                         default:
                             Console.WriteLine("Invalid choice. Try again.");
                             break;
@@ -131,8 +131,7 @@ namespace SampleHierarchies.UserInterface
                 catch
                 {
                     Console.WriteLine("Invalid choice. Try again.");
-                }
-                return false;
+                }               
             }
         }
     }
