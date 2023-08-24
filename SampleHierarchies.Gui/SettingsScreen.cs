@@ -38,7 +38,7 @@ namespace SampleHierarchies.UserInterface
         {
             while (true)
             {
-                Console.WriteLine();
+                Console.WriteLine("");
                 Console.WriteLine("Settings Menu:");
                 Console.WriteLine("0. Exit");
                 Console.WriteLine("1. Set MainScreen color");
