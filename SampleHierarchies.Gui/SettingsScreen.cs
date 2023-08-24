@@ -51,6 +51,7 @@ namespace SampleHierarchies.UserInterface
                 Console.WriteLine("8. Read settings from file");
                 Console.WriteLine("9. Write settings to file");
                 Console.Write("Please enter your choice: ");
+                Console.WriteLine("");
 
                 string? choiceAsString = Console.ReadLine();
                 Console.ResetColor();
