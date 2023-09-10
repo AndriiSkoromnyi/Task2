@@ -4,7 +4,6 @@ using Microsoft.Extensions.Hosting;
 using PeanutButter.TinyEventAggregator;
 using SampleHierarchies.Data;
 using SampleHierarchies.Gui;
-using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
 using SampleHierarchies.Services;
 using SampleHierarchies.UserInterface;
@@ -19,20 +18,11 @@ namespace ImageTagger.FrontEnd.WinForms
         [STAThread]
         static void Main(string[] args)
         {
-            // Build and configure the service provider
-            ServiceProvider = CreateHostBuilder().Build().Services;
+            var host = CreateHostBuilder().Build();
+            ServiceProvider = host.Services;
 
-            ISettingsService settingsService = ServiceProvider.GetRequiredService<ISettingsService>();
-            AnimalsScreen animalsScreen = new AnimalsScreen(
-                ServiceProvider.GetRequiredService<IDataService>(),
-                ServiceProvider.GetRequiredService<MammalsScreen>(),
-                settingsService,
-                settingsService.Settings); // Using the actual settings object
-            SettingsScreen settingsScreen = ServiceProvider.GetRequiredService<SettingsScreen>();
-            MainScreen mainScreen = new MainScreen(settingsService, animalsScreen, settingsScreen);
-
+            var mainScreen = ServiceProvider.GetRequiredService<MainScreen>();
             mainScreen.ShowMainMenu();
-
         }
 
         static IHostBuilder CreateHostBuilder()
@@ -54,6 +44,5 @@ namespace ImageTagger.FrontEnd.WinForms
                     services.AddSingleton<SettingsScreen, SettingsScreen>();
                 });
         }
-
     }
 }

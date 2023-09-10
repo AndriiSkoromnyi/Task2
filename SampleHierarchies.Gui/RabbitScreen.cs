@@ -1,9 +1,7 @@
 ﻿using SampleHierarchies.Data.Mammals;
 using SampleHierarchies.Enums;
 using SampleHierarchies.Gui;
-using SampleHierarchies.Interfaces.Data.Mammals;
 using SampleHierarchies.Interfaces.Services;
-using SampleHierarchies.Services;
 
 
 public sealed class RabbitScreen : Screen
@@ -19,6 +17,9 @@ public sealed class RabbitScreen : Screen
     /// Ctor.
     /// </summary>
     /// <param name="dataService">Data service reference</param>
+
+    private string jsonFile = "RabbitScreen.json";
+
     public RabbitScreen(IDataService dataService, ISettingsService settingsService)
     {
         _dataService = dataService;
@@ -34,15 +35,14 @@ public sealed class RabbitScreen : Screen
         while (true)
         {
 
-            Console.ForegroundColor = _settingsService.Settings._rabbitScreenForegroundColor;
-            Console.WriteLine();
-            Console.WriteLine("Your available choices are:");
-            Console.WriteLine("0. Exit");
-            Console.WriteLine("1. List all rabbits");
-            Console.WriteLine("2. Create a new rabbit");
-            Console.WriteLine("3. Delete existing rabbit");
-            Console.WriteLine("4. Modify existing rabbit");
-            Console.Write("Please enter your choice: ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 0); // "Your available choices are:"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 1); // "0. Exit"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 2); // "1. List all Rabbits"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 3); // "2. Create a new Rabbit"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 4); // "3. Delete existing Rabbit"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 5); // "4. Modify existing Rabbit"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 6); // "Please enter your choice:"
+
 
             string? choiceAsString = Console.ReadLine();
             Console.ResetColor();
@@ -76,13 +76,13 @@ public sealed class RabbitScreen : Screen
 
 
                     case RabbitsScreenChoices.Exit:
-                        Console.WriteLine("Going back to parent menu.");
+                        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 7);//"Going back to parent menu.");
                         return;
                 }
             }
             catch
             {
-                Console.WriteLine("Invalid choice. Try again.");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 8);//"Invalid choice. Try again.");
             }
         }
     }
@@ -96,22 +96,21 @@ public sealed class RabbitScreen : Screen
     /// </summary>
     private void ListRabbit()
     {
-        Console.WriteLine();
         if (_dataService?.Animals?.Mammals?.Rabbits is not null &&
             _dataService.Animals.Mammals.Rabbits.Count > 0)
         {
-            Console.WriteLine("Here's a list of Rabbits:");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 9);//"Here's a list of Rabbits:");
             int i = 1;
             foreach (Rabbit rabbit in _dataService.Animals.Mammals.Rabbits)
             {
-                Console.Write($"Rabbit number {i}, ");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 10); Console.Write($"{i}");//($"Rabbit number {i}, ");
                 rabbit.Display();
                 i++;
             }
         }
         else
         {
-            Console.WriteLine("The list of rabbits is empty.");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 11);//"The list of rabbits is empty.");
         }
     }
 
@@ -124,11 +123,11 @@ public sealed class RabbitScreen : Screen
         {
             Rabbit rabbit = AddEditRabbit();
             _dataService?.Animals?.Mammals?.Rabbits?.Add(rabbit);
-            Console.WriteLine("Rabbit with name: {0} has been added to the list of rabbits", rabbit.Name);
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 12);//"Rabbit with name: {0} has been added to the list of rabbits", rabbit.Name);
         }
         catch
         {
-            Console.WriteLine("Invalid input.");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 13);//"Invalid input.");
         }
     }
 
@@ -139,7 +138,7 @@ public sealed class RabbitScreen : Screen
     {
         try
         {
-            Console.Write("What is the name of the rabbit you want to delete? ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 14);//("What is the name of the rabbit you want to delete? ");
             string? name = Console.ReadLine();
             if (name is null)
             {
@@ -150,16 +149,16 @@ public sealed class RabbitScreen : Screen
             if (rabbit is not null)
             {
                 _dataService?.Animals?.Mammals?.Rabbits?.Remove(rabbit);
-                Console.WriteLine("Rabbit with name: {0} has been deleted from the list of rabbits", rabbit.Name);
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 15);//"Rabbit with name: {0} has been deleted from the list of rabbits", rabbit.Name);
             }
             else
             {
-                Console.WriteLine("Rabbit not found.");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 16);//"Rabbit not found.");
             }
         }
         catch
         {
-            Console.WriteLine("Invalid input.");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 17);//"Invalid input.");
         }
     }
 
@@ -170,7 +169,7 @@ public sealed class RabbitScreen : Screen
     {
         try
         {
-            Console.Write("What is the name of the rabbit you want to edit? ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 18);//("What is the name of the rabbit you want to edit? ");
             string? name = Console.ReadLine();
             if (name is null)
             {
@@ -182,17 +181,17 @@ public sealed class RabbitScreen : Screen
             {
                 Rabbit rabbitEdited = AddEditRabbit();
                 rabbit.Copy(rabbitEdited);
-                Console.Write("Rabbit after edit:");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 19);//("Rabbit after edit:");
                 rabbit.Display();
             }
             else
             {
-                Console.WriteLine("Rabbit not found.");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 20);//"Rabbit not found.");
             }
         }
         catch
         {
-            Console.WriteLine("Invalid input. Try again.");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 21);//"Invalid input. Try again.");
         }
     }
 
@@ -202,16 +201,16 @@ public sealed class RabbitScreen : Screen
     /// <exception cref="ArgumentNullException"></exception>
     private Rabbit AddEditRabbit()
     {
-        Console.Write("What name of the rabbit? ");
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 22);//"What name of the rabbit? ")
         string? name = Console.ReadLine();
-        Console.Write("What is the rabbit's age? ");
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 23);//"What is the rabbit's age? "
         string? ageAsString = Console.ReadLine();
-        Console.Write("How much does rabbit weigh (kg)? ");
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 24);//"How much does rabbit weigh (kg)? "
         string? weightAsString = Console.ReadLine();
-        Console.Write("Write a type of your rabbit: Dutch, Mini Lop, Lionhead, Angora, or something else ");
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 25);//"Write a type of your rabbit: Dutch, Mini Lop, Lionhead, Angora, or something else "
         string? typeOfRabbit = Console.ReadLine();
 
-        Console.Write("Does the rabbit have an owner? (Y/N): ");
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 26);//"Does the rabbit have an owner? (Y/N): "
         string? hasOwnerInput = Console.ReadLine();
 
         bool hasOwner = false;
@@ -229,16 +228,12 @@ public sealed class RabbitScreen : Screen
             }
             else
             {
-                Console.WriteLine("ERROR - Invalid input. Assuming no owner.");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 27);//"ERROR - Invalid input. Assuming no owner."
                 hasOwner = false;
             }
         }
-        else
-        {
-            Console.WriteLine("ERROR - Invalid input. Assuming no owner.");
-            hasOwner = false;
-        }
-        Console.Write("Which food prefer?");
+        
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 28);//"Which food prefer?"
         string? food = Console.ReadLine();
 
         if (name is null)

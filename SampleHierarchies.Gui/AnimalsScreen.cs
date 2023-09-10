@@ -1,5 +1,4 @@
 ﻿using SampleHierarchies.Enums;
-using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
 
 namespace SampleHierarchies.Gui
@@ -15,6 +14,8 @@ namespace SampleHierarchies.Gui
         private MammalsScreen _mammalsScreen;
         private ISettingsService _settingsService;
         private ISettings _settings;
+
+        private string jsonFile = "AnimalsScreen.json";
 
         public AnimalsScreen(
             IDataService dataService,
@@ -37,16 +38,23 @@ namespace SampleHierarchies.Gui
         {
             while (true)
             {
-                Console.ForegroundColor = _settingsService.Settings._animalScreenForegroundColor;
-                Console.WriteLine();
+                // Display line 0 from JSON (Header)
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 0);
 
-                Console.WriteLine();
-                Console.WriteLine("Your available choices are:");
-                Console.WriteLine("0. Exit");
-                Console.WriteLine("1. Mammals");
-                Console.WriteLine("2. Save to file");
-                Console.WriteLine("3. Read from file");
-                Console.Write("Please enter your choice: ");
+                // Display line 1 from JSON (Menu option: "0. Exit")
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 1);
+
+                // Display line 2 from JSON (Menu option: "1. Mammals")
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 2);
+
+                // Display line 3 from JSON (Menu option: "2. Save to file")
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 3);
+
+                // Display line 4 from JSON (Menu option: "3. Read from file")
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 4);
+
+                // Display line 5 from JSON (Prompt)
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 5);
 
                 string? choiceAsString = Console.ReadLine();
                 Console.ResetColor();
@@ -75,13 +83,15 @@ namespace SampleHierarchies.Gui
                             break;
 
                         case AnimalsScreenChoices.Exit:
-                            Console.WriteLine("Going back to parent menu.");
+                            // Display line 6 from JSON (Going back to parent menu.)
+                            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 6);
                             return;
                     }
                 }
                 catch
                 {
-                    Console.WriteLine("Invalid choice. Try again.");
+                    // Display line 7 from JSON (Invalid choice. Try again.)
+                    ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 7);
                 }
             }
         }
@@ -94,7 +104,8 @@ namespace SampleHierarchies.Gui
         {
             try
             {
-                Console.Write("Save data to file: ");
+                // Display line 8 from JSON (Save data to file)
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 8);
                 var fileName = Console.ReadLine();
                 if (fileName is null)
                 {
@@ -103,11 +114,13 @@ namespace SampleHierarchies.Gui
 
                 // Save text colors to settings before saving to file
                 _settingsService.Write(_settings, fileName);
-                Console.WriteLine("Data saving to: '{0}' was successful.", fileName);
+                // Display line 9 from JSON (File name)
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 9);
             }
             catch
             {
-                Console.WriteLine("Data saving was not successful.");
+                // Display line 10 from JSON (Data saving was not successful)
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 10);
             }
         }
 
@@ -115,7 +128,8 @@ namespace SampleHierarchies.Gui
         {
             try
             {
-                Console.Write("Read data from file: ");
+                // Display line 11 from JSON (Read data from file)
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 11);
                 var fileName = Console.ReadLine();
                 if (fileName is null)
                 {
@@ -126,20 +140,22 @@ namespace SampleHierarchies.Gui
 
                 if (_settings is not null)
                 {
-                    // Use the loaded settings to set colors of different screens
-                    //SetTextColorsFromSettings();
-                    Console.WriteLine("This is the Animals Screen.");
+                    
+                    // Display line 12 from JSON (This is the Animals Screen.)
+                    ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 12);
                 }
                 else
                 {
-                    Console.WriteLine("Data reading from: '{0}' was not successful.", fileName);
+                    // Display line 13 from JSON (File name)
+                    ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 13); Console.WriteLine(fileName);
                 }
             }
             catch
             {
-                Console.WriteLine("Data reading was not successful.");
+                // Display line 14 from JSON (Data reading was not successful)
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 14);
             }
-        }  
+        }
 
         #endregion // Private Methods
     }

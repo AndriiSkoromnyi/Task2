@@ -1,10 +1,7 @@
-﻿using System;
-using System.Drawing;
-using SampleHierarchies.Data.Mammals;
+﻿using SampleHierarchies.Data.Mammals;
 using SampleHierarchies.Enums;
-using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
-using SampleHierarchies.Services;
+
 
 namespace SampleHierarchies.Gui
 {
@@ -22,6 +19,8 @@ namespace SampleHierarchies.Gui
         private IDataService _dataService;
         private ISettings _settings;
         private ISettingsService _settingsService;
+
+        private string jsonFile = "DogsScreen.json";
 
         /// <summary>
         /// Ctor.
@@ -44,17 +43,13 @@ namespace SampleHierarchies.Gui
         {
             while (true)
             {
-                Console.ForegroundColor = _settingsService.Settings._dogScreenForegroundColor;
-                Console.WriteLine();
-
-                Console.WriteLine();
-                Console.WriteLine("Your available choices are:");
-                Console.WriteLine("0. Exit");
-                Console.WriteLine("1. List all dogs");
-                Console.WriteLine("2. Create a new dog");
-                Console.WriteLine("3. Delete existing dog");
-                Console.WriteLine("4. Modify existing dog");
-                Console.Write("Please enter your choice: ");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 0); // "Your available choices are:"
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 1); // "0. Exit"
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 2); // "1. List all dogs"
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 3); // "2. Create a new dog"
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 4); // "3. Delete existing dog"
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 5); // "4. Modify existing dog"
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 6); // "Please enter your choice:"
 
                 string? choiceAsString = Console.ReadLine();
                 Console.ResetColor();
@@ -87,13 +82,13 @@ namespace SampleHierarchies.Gui
                             break;
 
                         case DogsScreenChoices.Exit:
-                            Console.WriteLine("Going back to parent menu.");
+                            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 7); // "Going back to parent menu."
                             return;
                     }
                 }
                 catch
                 {
-                    Console.WriteLine("Invalid choice. Try again.");
+                    ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 8); // "Invalid choice. Try again."
                 }
             }
         }
@@ -111,18 +106,19 @@ namespace SampleHierarchies.Gui
             if (_dataService?.Animals?.Mammals?.Dogs is not null &&
                 _dataService.Animals.Mammals.Dogs.Count > 0)
             {
-                Console.WriteLine("Here's a list of dogs:");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 9);//Here's a list of dogs:
                 int i = 1;
                 foreach (Dog dog in _dataService.Animals.Mammals.Dogs)
                 {
-                    Console.Write($"Dog number {i}, ");
+                    ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 10); Console.Write($"{i}");
+                    
                     dog.Display();
                     i++;
                 }
             }
             else
             {
-                Console.WriteLine("The list of dogs is empty.");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 11);
             }
         }
 
@@ -135,11 +131,11 @@ namespace SampleHierarchies.Gui
             {
                 Dog dog = AddEditDog();
                 _dataService?.Animals?.Mammals?.Dogs?.Add(dog);
-                Console.WriteLine("Dog with name: {0} has been added to a list of dogs", dog.Name);
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 12);
             }
             catch
             {
-                Console.WriteLine("Invalid input.");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 13);
             }
         }
 
@@ -150,7 +146,7 @@ namespace SampleHierarchies.Gui
         {
             try
             {
-                Console.Write("What is the name of the dog you want to delete? ");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 14);
                 string? name = Console.ReadLine();
                 if (name is null)
                 {
@@ -161,16 +157,16 @@ namespace SampleHierarchies.Gui
                 if (dog is not null)
                 {
                     _dataService?.Animals?.Mammals?.Dogs?.Remove(dog);
-                    Console.WriteLine("Dog with name: {0} has been deleted from a list of dogs", dog.Name);
+                    ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 15);
                 }
                 else
                 {
-                    Console.WriteLine("Dog not found.");
+                    ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 16);
                 }
             }
             catch
             {
-                Console.WriteLine("Invalid input.");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 17);
             }
         }
 
@@ -181,7 +177,7 @@ namespace SampleHierarchies.Gui
         {
             try
             {
-                Console.Write("What is the name of the dog you want to edit? ");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 18);
                 string? name = Console.ReadLine();
                 if (name is null)
                 {
@@ -193,17 +189,17 @@ namespace SampleHierarchies.Gui
                 {
                     Dog dogEdited = AddEditDog();
                     dog.Copy(dogEdited);
-                    Console.Write("Dog after edit:");
+                    ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 19);
                     dog.Display();
                 }
                 else
                 {
-                    Console.WriteLine("Dog not found.");
+                    ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 20);
                 }
             }
             catch
             {
-                Console.WriteLine("Invalid input. Try again.");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 21);
             }
         }
 
@@ -213,11 +209,11 @@ namespace SampleHierarchies.Gui
         /// <exception cref="ArgumentNullException"></exception>
         private Dog AddEditDog()
         {
-            Console.Write("What name of the dog? ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 22);
             string? name = Console.ReadLine();
-            Console.Write("What is the dog's age? ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 23);
             string? ageAsString = Console.ReadLine();
-            Console.Write("What is the dog's breed? ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 24);
             string? breed = Console.ReadLine();
 
             if (name is null)

@@ -1,4 +1,4 @@
-﻿using SampleHierarchies.Interfaces.Data;
+﻿using SampleHierarchies.Interfaces.Services;
 
 namespace SampleHierarchies.Data
 {
@@ -23,6 +23,8 @@ namespace SampleHierarchies.Data
         public ConsoleColor _rabbitScreenForegroundColor { get; set; } = ConsoleColor.Cyan;
 
         public ConsoleColor _horseScreenForegroundColor { get; set; } = ConsoleColor.Magenta;
+
+        public object screenLine { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         #endregion // Properties
 

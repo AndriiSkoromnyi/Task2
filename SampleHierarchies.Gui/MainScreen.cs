@@ -10,6 +10,10 @@ namespace SampleHierarchies.UserInterface
         private AnimalsScreen _animalsScreen;
         private SettingsScreen _settingsScreen;
 
+        
+
+        private string jsonFile = "MainScreen.json";
+
         public MainScreen(ISettingsService settingsService, AnimalsScreen animalsScreen, SettingsScreen settingsScreen)
         {
             _settingsService = settingsService;
@@ -21,44 +25,29 @@ namespace SampleHierarchies.UserInterface
         {
             while (true)
             {
-                Console.ForegroundColor = _settingsService.Settings._mainScreenForegroundColor;
-                Console.WriteLine();
-
-                Console.WriteLine("Main Menu");
-                Console.WriteLine("0. Exit");
-                Console.WriteLine("1. Open Animals Screen");
-                Console.WriteLine("2. Manage Settings");
-                Console.Write("Enter your choice: ");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 0);//"Enter your choise: "
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 1);//"0. Exit"
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 2);//"1. Animals"
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 3);//"2. Manage Settings"
 
                 string? choiceAsString = Console.ReadLine();
                 Console.ResetColor();
 
-                try
+                if (!string.IsNullOrEmpty(choiceAsString) && int.TryParse(choiceAsString, out int choice))
                 {
-                    if (choiceAsString is null)
-                    {
-                        throw new ArgumentNullException(nameof(choiceAsString));
-                    }
-
-                    MainScreenChoices choice = (MainScreenChoices)Int32.Parse(choiceAsString);
-                    switch (choice)
+                    switch ((MainScreenChoices)choice)
                     {
                         case MainScreenChoices.Animals:
                             _animalsScreen.Show();
                             break;
 
-                        case MainScreenChoices.Settings:                            
-                            _settingsScreen.Show();                           
-                            break; ;
+                        case MainScreenChoices.Settings:
+                            _settingsScreen.Show();
+                            break;
 
                         case MainScreenChoices.Exit:
-                            Console.WriteLine("Goodbye.");
                             return;
                     }
-                }
-                catch
-                {
-                    Console.WriteLine("Invalid choice. Try again.");
                 }
             }
         }

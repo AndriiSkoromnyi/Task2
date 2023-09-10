@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using SampleHierarchies.Data;
-using SampleHierarchies.Interfaces.Data;
 using SampleHierarchies.Interfaces.Services;
 
 namespace SampleHierarchies.Services

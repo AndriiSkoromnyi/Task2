@@ -1,13 +1,8 @@
-﻿
-using SampleHierarchies.Data.Mammals;
+﻿using SampleHierarchies.Data.Mammals;
 using SampleHierarchies.Enums;
 using SampleHierarchies.Gui;
 using SampleHierarchies.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 public sealed class HorseScreen : Screen
 {
@@ -18,6 +13,9 @@ public sealed class HorseScreen : Screen
     /// </summary>
     private IDataService _dataService;
     private ISettingsService _settingsService;
+
+    private string jsonFile = "HorseScreen.json";
+
     /// <summary>
     /// Ctor.
     /// </summary>
@@ -36,15 +34,13 @@ public sealed class HorseScreen : Screen
     {
         while (true)
         {
-            Console.ForegroundColor = _settingsService.Settings._horseScreenForegroundColor;
-            Console.WriteLine();          
-            Console.WriteLine("Your available choices are:");
-            Console.WriteLine("0. Exit");
-            Console.WriteLine("1. List all horse");
-            Console.WriteLine("2. Create a new horse");
-            Console.WriteLine("3. Delete existing horse");
-            Console.WriteLine("4. Modify existing horse");
-            Console.Write("Please enter your choice: ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 0); // "Your available choices are:"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 1); // "0. Exit"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 2); // "1. List all horse"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 3); // "2. Create a new horse"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 4); // "3. Delete existing horse"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 5); // "4. Modify existing horse"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 6); // "Please enter your choice:"
 
             string? choiceAsString = Console.ReadLine();
             Console.ResetColor();
@@ -76,13 +72,13 @@ public sealed class HorseScreen : Screen
                         break;
 
                     case HorsesScreenChoices.Exit:
-                        Console.WriteLine("Going back to parent menu.");
+                         ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 7);//"Going back to parent menu."
                         return;
                 }
             }
             catch
             {
-                Console.WriteLine("Invalid choice. Try again.");
+                 ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 8);//"Invalid choice. Try again."
             }
         }
     }
@@ -96,22 +92,23 @@ public sealed class HorseScreen : Screen
     /// </summary>
     private void ListHorse()
     {
-        Console.WriteLine();
+        
         if (_dataService?.Animals?.Mammals?.Horses is not null &&
             _dataService.Animals.Mammals.Horses.Count > 0)
         {
-            Console.WriteLine("Here's a list of Horses:");
+             ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 9);//"Here's a list of Horses:"
             int i = 1;
             foreach (Horse horse in _dataService.Animals.Mammals.Horses)
             {
-                Console.Write($"Horse number {i}, ");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 10); Console.Write($"{i}");//"Horse number 
+
                 horse.Display();
                 i++;
             }
         }
         else
         {
-            Console.WriteLine("The list of horsess is empty.");
+             ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 11);//"The list of horsess is empty."
         }
     }
 
@@ -124,11 +121,11 @@ public sealed class HorseScreen : Screen
         {
             Horse horse = AddEditHorse();
             _dataService?.Animals?.Mammals?.Horses?.Add(horse);
-            Console.WriteLine("Horse with name: {0} has been added to a list of horses", horse.Name);
+             ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 12);//"Horse with this name: has been added to a list of horses"
         }
         catch
         {
-            Console.WriteLine("Invalid input.");
+             ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 13);//"Invalid input."
         }
     }
 
@@ -139,7 +136,7 @@ public sealed class HorseScreen : Screen
     {
         try
         {
-            Console.Write("What is the name of the horse you want to delete? ");
+             ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 14);//"What is the name of the horse you want to delete? "
             string? name = Console.ReadLine();
             if (name is null)
             {
@@ -150,16 +147,16 @@ public sealed class HorseScreen : Screen
             if (horse is not null)
             {
                 _dataService?.Animals?.Mammals?.Horses?.Remove(horse);
-                Console.WriteLine("Horse with name: {0} has been deleted from a list of horses", horse.Name);
+                 ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 15);//"Horse with this name: has been deleted from a list of horses"
             }
             else
             {
-                Console.WriteLine("Horse not found.");
+                 ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 16);//"Horse not found."
             }
         }
         catch
         {
-            Console.WriteLine("Invalid input.");
+             ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 17);//"Invalid input."
         }
     }
 
@@ -170,7 +167,7 @@ public sealed class HorseScreen : Screen
     {
         try
         {
-            Console.Write("What is the name of the horse you want to edit? ");
+             ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 18);//"What is the name of the horse you want to edit? "
             string? name = Console.ReadLine();
             if (name is null)
             {
@@ -182,17 +179,17 @@ public sealed class HorseScreen : Screen
             {
                 Horse horseEdited = AddEditHorse();
                 horse.Copy(horseEdited);
-                Console.Write("Horse after edit:");
+                 ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 19);//"Horse after edit:"
                 horse.Display();
             }
             else
             {
-                Console.WriteLine("Horse not found.");
+                 ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 20);//"Horse not found."
             }
         }
         catch
         {
-            Console.WriteLine("Invalid input. Try again.");
+             ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 21);//"Invalid input. Try again."
         }
     }
 
@@ -202,17 +199,17 @@ public sealed class HorseScreen : Screen
     /// <exception cref="ArgumentNullException"></exception>
     private Horse AddEditHorse()
     {
-        Console.Write("What name of the horse? ");
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 22);//"What name of the horse? "
         string? name = Console.ReadLine();
-        Console.Write("What is the horse's age? ");
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 23);//"What is the horse's age? "
         string? ageAsString = Console.ReadLine();
-        Console.Write("What is the horse's breed? ");
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 24);//"What is the horse's breed? "
         string? breed = Console.ReadLine();
-        Console.Write("What is the horse's color? ");
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 25);//("What is the horse's color? "
         string? color = Console.ReadLine();
-        Console.Write("How much does horse weight (kg)? ");
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 26);//"How much does horse weight (kg)? "
         string? weightAsString = Console.ReadLine();
-        Console.Write("Write a type of your horse: Pony, Working horse, Sport horse, Draft horse, Riding horse or smt. another ");
+        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 27);//"Write a type of your horse: Pony, Working horse, Sport horse, Draft horse, Riding horse or smt. another "
         string? typeOfHorse = Console.ReadLine();
        
 

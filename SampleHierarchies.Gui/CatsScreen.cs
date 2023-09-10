@@ -1,9 +1,7 @@
 ﻿using SampleHierarchies.Data.Mammals;
 using SampleHierarchies.Enums;
 using SampleHierarchies.Gui;
-using SampleHierarchies.Interfaces.Data.Mammals;
 using SampleHierarchies.Interfaces.Services;
-using SampleHierarchies.Services;
 
 
 public sealed class CatScreen : Screen
@@ -15,6 +13,8 @@ public sealed class CatScreen : Screen
     /// </summary>
     private IDataService _dataService;
     private ISettingsService _settingsService;
+
+    private string jsonFile = "CatScreen.json";
 
     /// <summary>
     /// Ctor.
@@ -34,18 +34,13 @@ public sealed class CatScreen : Screen
     {
         while (true)
         {
-
-            Console.ForegroundColor = _settingsService.Settings._catScreenForegroundColor;
-            Console.WriteLine();
-
-            Console.WriteLine();
-            Console.WriteLine("Your available choices are:");
-            Console.WriteLine("0. Exit");
-            Console.WriteLine("1. List all cats");
-            Console.WriteLine("2. Create a new cat");
-            Console.WriteLine("3. Delete existing cat");
-            Console.WriteLine("4. Modify existing cat");
-            Console.Write("Please enter your choice: ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 0); // "Your available choices are:"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 1); // "0. Exit"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 2); // "1. List all cats"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 3); // "2. Create a new cat"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 4); // "3. Delete existing cat"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 5); // "4. Modify existing cat"
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 6); // "Please enter your choice:"
 
             string? choiceAsString = Console.ReadLine();
             Console.ResetColor();
@@ -77,13 +72,13 @@ public sealed class CatScreen : Screen
                         break;
 
                     case CatsScreenChoices.Exit:
-                        Console.WriteLine("Going back to parent menu.");
+                        ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 7);//"Going back to parent menu."
                         return;
                 }
             }
             catch
             {
-                Console.WriteLine("Invalid choice. Try again.");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 8);//"Invalid choice. Try again."
             }
         }
     }
@@ -97,22 +92,21 @@ public sealed class CatScreen : Screen
     /// </summary>
     private void ListCat()
     {
-        Console.WriteLine();
         if (_dataService?.Animals?.Mammals?.Cats is not null &&
             _dataService.Animals.Mammals.Cats.Count > 0)
         {
-            Console.WriteLine("Here's a list of Cats:");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 9);//"Here's a list of Cats:"
             int i = 1;
             foreach (Cat cat in _dataService.Animals.Mammals.Cats)
             {
-                Console.Write($"Cat number {i}, ");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 10); Console.Write($"{i}");  //"Cat number {i}, "
                 cat.Display();
                 i++;
             }
         }
         else
         {
-            Console.WriteLine("The list of cats is empty.");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 11);//"The list of cats is empty."
         }
     }
 
@@ -125,11 +119,11 @@ public sealed class CatScreen : Screen
         {
             Cat cat = AddEditCat();
             _dataService?.Animals?.Mammals?.Cats?.Add(cat);
-            Console.WriteLine("Cat with name: {0} has been added to the list of cats", cat.Name);
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 12);//"Cat with name: {0} has been added to the list of cats", cat.Name
         }
         catch
         {
-            Console.WriteLine("Invalid input.");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 13);//"Invalid input."
         }
     }
 
@@ -140,7 +134,7 @@ public sealed class CatScreen : Screen
     {
         try
         {
-            Console.Write("What is the name of the cat you want to delete? ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 14);//"What is the name of the cat you want to delete? "
             string? name = Console.ReadLine();
             if (name is null)
             {
@@ -151,16 +145,16 @@ public sealed class CatScreen : Screen
             if (cat is not null)
             {
                 _dataService?.Animals?.Mammals?.Cats?.Remove(cat);
-                Console.WriteLine("Cat with name: {0} has been deleted from the list of cats", cat.Name);
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 15);//"Cat with this name: has been deleted from the list of cats", cat.Name
             }
             else
             {
-                Console.WriteLine("Cat not found.");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 16);//"Cat not found."
             }
         }
         catch
         {
-            Console.WriteLine("Invalid input.");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 17);//"Invalid input."
         }
     }
 
@@ -171,7 +165,7 @@ public sealed class CatScreen : Screen
     {
         try
         {
-            Console.Write("What is the name of the cat you want to edit? ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 18);//"What is the name of the cat you want to edit? "
             string? name = Console.ReadLine();
             if (name is null)
             {
@@ -183,17 +177,17 @@ public sealed class CatScreen : Screen
             {
                 Cat catEdited = AddEditCat();
                 cat.Copy(catEdited);
-                Console.Write("Cat after edit:");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 19);//"Cat after edit:"
                 cat.Display();
             }
             else
             {
-                Console.WriteLine("Cat not found.");
+                ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 20);//"Cat not found."
             }
         }
         catch
         {
-            Console.WriteLine("Invalid input. Try again.");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 21);//"Invalid input. Try again."
         }
     }
 
@@ -204,15 +198,15 @@ public sealed class CatScreen : Screen
     private Cat AddEditCat()
     {
         {
-            Console.Write("What name of the cat? ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 22);//"What name of the cat? "
             string? name = Console.ReadLine();
-            Console.Write("What is the cat's age? ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 23);//"What is the cat's age? "
             string? ageAsString = Console.ReadLine();
-            Console.Write("How much does cat weigh (kg)? ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 24);//"How much does cat weigh (kg)? "
             string? weightAsString = Console.ReadLine();
-            Console.Write("Write a type of your cat: Persian, Siamese, Bengal, Russian Blue, or something else ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 25);//"Write a type of your cat: Persian, Siamese, Bengal, Russian Blue, or something else "
             string? typeOfCat = Console.ReadLine();
-            Console.Write("Does the cat have an owner? (Y/N): ");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 26);//"Does the cat have an owner? (Y/N): "
             string? hasOwnerInput = Console.ReadLine();
 
             bool hasOwner = false;
@@ -228,17 +222,13 @@ public sealed class CatScreen : Screen
                 }
                 else
                 {
-                    Console.WriteLine("ERROR - Invalid input. Assuming no owner.");
+                    ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 27);//"ERROR - Invalid input. Assuming no owner."
                     hasOwner = false;
                 }
             }
-            else
-            {
-                Console.WriteLine("ERROR - Invalid input. Assuming no owner.");
-                hasOwner = false;
-            }
+           
 
-            Console.Write("Which food prefer?");
+            ScreenDefinitionService.DisplayScreenLinesWithColors(jsonFile, 28);//"Which food prefer?"
             string? foodPreference = Console.ReadLine();
 
             if (name is null)
